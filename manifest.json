@@ -1,0 +1,11 @@
+{
+  "id": "pick-mup-llm-rag",
+  "name": "Pick-mUp LLM with RAG",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Connect to local and paid LLMs with RAG capabilities via SQL server for enhanced note interactions",
+  "author": "Pick-mUp Team",
+  "authorUrl": "https://github.com/erhebend-tai/Pick-mUp",
+  "fundingUrl": "",
+  "isDesktopOnly": false
+}
