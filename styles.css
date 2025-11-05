@@ -1,0 +1,94 @@
+/* Pick-mUp LLM Plugin Styles */
+
+.llm-response {
+    font-family: var(--font-text);
+    line-height: 1.6;
+    color: var(--text-normal);
+}
+
+.llm-query-modal {
+    min-width: 500px;
+    max-width: 800px;
+}
+
+.llm-query-modal textarea {
+    font-family: var(--font-text);
+    resize: vertical;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.llm-query-modal button {
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+}
+
+.llm-query-modal button:hover {
+    background-color: var(--interactive-accent-hover);
+}
+
+.llm-loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: var(--text-muted);
+}
+
+.llm-error {
+    color: var(--text-error);
+    padding: 10px;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+    border-left: 3px solid var(--text-error);
+}
+
+.llm-success {
+    color: var(--text-success);
+    padding: 10px;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+    border-left: 3px solid var(--text-success);
+}
+
+.rag-context-preview {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    padding: 8px;
+    margin: 8px 0;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.provider-indicator {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.provider-indicator.openai {
+    background-color: #10a37f;
+    color: white;
+}
+
+.provider-indicator.anthropic {
+    background-color: #d97706;
+    color: white;
+}
+
+.provider-indicator.local {
+    background-color: #6366f1;
+    color: white;
+}
