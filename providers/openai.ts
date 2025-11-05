@@ -1,7 +1,7 @@
-import { LLMProvider, LLMResponse } from '../types';
+import { LLMProvider, EmbeddingProvider } from '../types';
 import { PickMUpSettings } from '../settings';
 
-export class OpenAIProvider implements LLMProvider {
+export class OpenAIProvider implements LLMProvider, EmbeddingProvider {
 	name = 'OpenAI';
 	
 	constructor(private settings: PickMUpSettings) {}

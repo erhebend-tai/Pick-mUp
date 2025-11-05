@@ -118,14 +118,26 @@ export default class PickMUpPlugin extends Plugin {
 	}
 
 	async generateEmbedding(text: string): Promise<number[]> {
-		// Use OpenAI for embeddings by default, or local LLM if configured
+		// Try to use the current provider if it supports embeddings
 		if (this.settings.defaultProvider === 'local' && this.localProvider.isConfigured()) {
-			return await this.localProvider.generateEmbedding(text);
-		} else if (this.openaiProvider.isConfigured()) {
-			return await this.openaiProvider.generateEmbedding(text);
-		} else {
-			throw new Error('No embedding provider configured. Please configure OpenAI or Local LLM.');
+			try {
+				return await this.localProvider.generateEmbedding(text);
+			} catch (error) {
+				console.warn('Local LLM embedding failed, falling back to OpenAI:', error);
+			}
 		}
+		
+		// Fall back to OpenAI if available
+		if (this.openaiProvider.isConfigured()) {
+			return await this.openaiProvider.generateEmbedding(text);
+		}
+		
+		// If OpenAI is not configured, try local LLM as last resort
+		if (this.localProvider.isConfigured()) {
+			return await this.localProvider.generateEmbedding(text);
+		}
+		
+		throw new Error('No embedding provider configured. Please configure OpenAI or Local LLM with embedding support.');
 	}
 
 	async indexNote(file: TFile): Promise<void> {

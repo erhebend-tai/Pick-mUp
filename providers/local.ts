@@ -1,7 +1,7 @@
-import { LLMProvider } from '../types';
+import { LLMProvider, EmbeddingProvider } from '../types';
 import { PickMUpSettings } from '../settings';
 
-export class LocalLLMProvider implements LLMProvider {
+export class LocalLLMProvider implements LLMProvider, EmbeddingProvider {
 	name = 'Local LLM';
 	
 	constructor(private settings: PickMUpSettings) {}

@@ -1,7 +1,7 @@
-import { LLMProvider } from '../types';
+import { LLMProvider, EmbeddingProvider } from '../types';
 import { PickMUpSettings } from '../settings';
 
-export class AnthropicProvider implements LLMProvider {
+export class AnthropicProvider implements LLMProvider, EmbeddingProvider {
 	name = 'Anthropic';
 	
 	constructor(private settings: PickMUpSettings) {}
@@ -46,6 +46,17 @@ export class AnthropicProvider implements LLMProvider {
 		}
 		
 		const data = await response.json();
+		
+		if (!data.content || data.content.length === 0 || !data.content[0].text) {
+			throw new Error('Invalid response from Anthropic API: No content received');
+		}
+		
 		return data.content[0].text;
+	}
+	
+	async generateEmbedding(text: string): Promise<number[]> {
+		// Anthropic doesn't provide embeddings API
+		// This is a fallback that should not be used
+		throw new Error('Anthropic does not support embeddings. Please use OpenAI or Local LLM for embeddings.');
 	}
 }

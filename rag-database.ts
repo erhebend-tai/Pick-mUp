@@ -9,17 +9,45 @@ interface DocumentEmbedding {
 	created_at: number;
 }
 
+interface SQLJsStatic {
+	Database: any;
+}
+
+declare global {
+	interface Window {
+		initSqlJs?: (config?: any) => Promise<SQLJsStatic>;
+	}
+}
+
 export class RAGDatabase {
 	private db: any = null;
-	private SQL: any = null;
+	private SQL: SQLJsStatic | null = null;
 	
 	async initialize(): Promise<void> {
 		try {
-			// Dynamic import of sql.js for browser environment
-			const initSqlJs = (window as any).initSqlJs || require('sql.js');
+			// Try browser environment first (window.initSqlJs)
+			let initSqlJs = window.initSqlJs;
+			
+			// Fallback to Node.js require for development/testing
+			if (!initSqlJs) {
+				try {
+					initSqlJs = require('sql.js');
+				} catch (e) {
+					console.error('Failed to load sql.js:', e);
+				}
+			}
+			
+			if (!initSqlJs) {
+				throw new Error('sql.js not available');
+			}
+			
 			this.SQL = await initSqlJs({
 				locateFile: (file: string) => `https://sql.js.org/dist/${file}`
 			});
+			
+			if (!this.SQL) {
+				throw new Error('Failed to initialize SQL.js');
+			}
 			
 			// Create new database
 			this.db = new this.SQL.Database();
